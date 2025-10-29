@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MouvementTest {
 
-    @Test void parserProgrammeValide(){
-        Deque<Mouvement> q = Mouvement.parserChaineEnDirection("AGDA");
+    @Test void parseDeChaineDinstructionDeDirectionValide(){
+        Deque<Mouvement> q = Mouvement.parseDeChaineDinstructionDeDirection("AGDA");
         assertEquals(4, q.size());
         assertEquals(Mouvement.A, q.pollFirst());
         assertEquals(Mouvement.G, q.pollFirst());
@@ -18,9 +18,9 @@ public class MouvementTest {
         assertEquals(Mouvement.A, q.pollFirst());
     }
 
-    @Test void parserProgrammeInvalide(){
+    @Test void parseDeChaineDinstructionDeDirectionInvalide(){
         assertThrows(IllegalArgumentException.class,
-                () -> Mouvement.parserChaineEnDirection("AZ"));
+                () -> Mouvement.parseDeChaineDinstructionDeDirection("AZ"));
     }
 
 

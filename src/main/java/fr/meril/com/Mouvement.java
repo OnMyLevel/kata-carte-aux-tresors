@@ -10,9 +10,9 @@ public enum Mouvement {
     A,G,D;
 
     /**
-     * Parse une chaîne "AGDA" en file d'actions.
+     * Parse une chaîne  dinstruction "AGDA" en file d'actions(liste de queue).
      * */
-    public static Deque<Mouvement> parserChaineEnDirection(String prog){
+    public static Deque<Mouvement> parseDeChaineDinstructionDeDirection(String prog){
         Deque<Mouvement> q = new ArrayDeque<>();
         for (char c : prog.toCharArray()) {
             switch (c) {
