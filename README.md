@@ -39,38 +39,6 @@ java -jar target/carte-aux-tresors.jar <entree.txt> <sortie.txt>
 
 ---
 
-## Architecture des classes (composants)
-
-```plantuml
-@startuml
-skinparam componentStyle rectangle
-package "Application" {
-  [ApplicationCarteAuxTresors] --> [ParseurFichierEntree]
-  [ApplicationCarteAuxTresors] --> [MoteurJeu]
-  [ApplicationCarteAuxTresors] --> [EcritureDuResumer]
-}
-
-package "Simulation" {
-  [MoteurJeu] --> [StatutJeu]
-  [StatutJeu] *-- [Carte]
-  [StatutJeu] *-- "1..*" [Aventurier]
-}
-
-package "Domaine" {
-  [Carte] --> [Position]
-  [Aventurier] --> [Position]
-  [Aventurier] --> [Direction]
-  [Aventurier] --> [Mouvement]
-}
-
-[ParseurFichierEntree] --> [StatutJeu] : construit
-[EcritureDuResumer] --> [StatutJeu] : lit
-[MoteurJeu] ..> [Carte] : bornes/montagnes/trésors
-@enduml
-```
-
----
-
 ## Séquence d’un tour
 
 ```plantuml
