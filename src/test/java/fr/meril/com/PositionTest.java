@@ -13,8 +13,8 @@ class PositionTest {
 
     void constructionEtAccess() {
         Position p = new Position(3, 5);
-        assertEquals(3, p.x);
-        assertEquals(5, p.y);
+        assertEquals(3, p.getX());
+        assertEquals(5, p.getY());
     }
 
     @Test
@@ -22,8 +22,8 @@ class PositionTest {
         Position p = new Position(1, 2);
         Position q = p.translation(3, -1);
 
-        assertEquals(1, p.x);
-        assertEquals(2, p.y);
+        assertEquals(1, p.getX());
+        assertEquals(2, p.getY());
 
         assertEquals(new Position(4, 1), q);
         assertNotSame(p, q, "translate doit creer une nouvelle instance");
@@ -68,12 +68,12 @@ class PositionTest {
     @Test
     void casLimites() {
         Position pNeg = new Position(-10, -20);
-        assertEquals(-10, pNeg.x);
-        assertEquals(-20, pNeg.y);
+        assertEquals(-10, pNeg.getX());
+        assertEquals(-20, pNeg.getY());
 
         Position pLarge = new Position(Integer.MAX_VALUE, Integer.MIN_VALUE);
-        assertEquals(Integer.MAX_VALUE, pLarge.x);
-        assertEquals(Integer.MIN_VALUE, pLarge.y);
+        assertEquals(Integer.MAX_VALUE, pLarge.getX());
+        assertEquals(Integer.MIN_VALUE, pLarge.getY());
 
         Position p = new Position(7, 8);
         Position q = p.translation(0, 0);

@@ -1,5 +1,5 @@
 package fr.meril.com;
 
 public enum TypeZone {
-    PLAINE, MONTAGNE
+    PLAINE, MONTAGNE;
 }
