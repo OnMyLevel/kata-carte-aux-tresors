@@ -8,17 +8,17 @@ import java.util.List;
 
 public class EcritureDuResumer {
 
-    public void ecrire(StatutJeu  etat, Path sortie) throws IOException {
+    public void ecrireJeu(StatutJeu  etat, Path sortie) throws IOException {
 
         List<String> lignes = new ArrayList<>();
-        lignes.add(String.format("C - %d - %d", etat.carte.getLargeur(),
-                etat.carte.getHauteur()));
+        lignes.add(String.format("C - %d - %d", etat.getCarte().getLargeur(),
+                etat.getCarte().getHauteur()));
 
-        for (Position m : etat.carte.getMontagnes())
+        for (Position m : etat.getCarte().getMontagnes())
             lignes.add(String.format("M - %d - %d", m.getX(), m.getY()));
-        lignes.addAll(etat.carte.affichageDeTresorsPourSortie());
+        lignes.addAll(etat.getCarte().affichageDeTresorsPourSortie());
 
-        for (Aventurier a : etat.aventuriers)
+        for (Aventurier a : etat.getAventuriers())
             lignes.add(String.format("A - %s - %d - %d - %s - %d",
                     a.getNom(), a.getPosition().getX(),
                     a.getPosition().getY(), a.getDirection(), a.getNbTresorsRamasser()));

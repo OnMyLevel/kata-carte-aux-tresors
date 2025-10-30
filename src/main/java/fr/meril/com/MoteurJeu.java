@@ -2,42 +2,40 @@ package fr.meril.com;
 
 import java.util.*;
 
-/** Moteur tour-par-tour sans politique : rotations, intentions d'avance, collisions, ramassage à l'entrée uniquement. */
 public final class MoteurJeu {
 
     private record Intention(Aventurier a, Position cible) {}
 
-    public void executer(StatutJeu etat) {
+    public void executerJeuTourParTour(StatutJeu etat) {
+        int tour = 0;
         while (auMoinsUnPeutEncoreBouger(etat)) {
+            tour++;
             appliquerRotations(etat);
             List<Intention> intentions = collecterIntentionsAvance(etat);
             resoudreIntentions(etat, intentions);
         }
     }
 
-    /* =====================  Étapes du tour  ===================== */
-
     private boolean auMoinsUnPeutEncoreBouger(StatutJeu etat) {
-        return etat.aventuriers.stream().anyMatch(Aventurier::aEncoreUnMouvement);
+        return etat.getAventuriers().stream().anyMatch(Aventurier::aEncoreUnMouvement);
     }
 
-    /** Étape 1 : appliquer toutes les rotations G/D (et consommer l'action) */
     private void appliquerRotations(StatutJeu etat) {
-        for (Aventurier a : etat.aventuriers) {
+        for (Aventurier a : etat.getAventuriers()) {
             if (!a.aEncoreUnMouvement()) continue;
             Mouvement next = a.voirLeProchainMouvement();
             if (next == Mouvement.G || next == Mouvement.D) {
                 a.consommer();
                 var dir = a.getDirection();
-                a.setDirection(next == Mouvement.G ? dir.tournerAGauche() : dir.tournerADroite());
+                a.setDirection(next ==
+                        Mouvement.G ? dir.tournerAGauche() : dir.tournerADroite());
             }
         }
     }
 
-    /** Étape 2 : collecter les intentions d'avancer (A) sans les exécuter */
     private List<Intention> collecterIntentionsAvance(StatutJeu etat) {
         List<Intention> intentions = new ArrayList<>();
-        for (Aventurier a : etat.aventuriers) {
+        for (Aventurier a : etat.getAventuriers()) {
             if (!a.aEncoreUnMouvement()) continue;
             if (a.voirLeProchainMouvement() == Mouvement.A) {
                 var d = a.getDirection();
@@ -48,7 +46,6 @@ public final class MoteurJeu {
         return intentions;
     }
 
-    /** Étape 3 : résoudre les intentions par ordre d'apparition, gérer collisions & ramassage */
     private void resoudreIntentions(StatutJeu etat, List<Intention> intentions) {
         intentions.sort(Comparator.comparingInt(i -> i.a.getOrdreApparition()));
 
@@ -67,24 +64,22 @@ public final class MoteurJeu {
         }
     }
 
-    /* =====================  Utilitaires  ===================== */
-
     private boolean deplacementValide(StatutJeu etat, Position cible, Set<Position> ciblesReservees) {
-        if (!etat.carte.dansLesBornes(cible)) return false;
-        if (etat.carte.estUneZoneMontagne(cible)) return false;
-        if (etat.occupation.containsKey(cible)) return false;
+        if (!etat.getCarte().dansLesBornes(cible)) return false;
+        if (etat.getCarte().estUneZoneMontagne(cible)) return false;
+        if (etat.getOccupation().containsKey(cible)) return false;
         if (ciblesReservees.contains(cible)) return false;
         return true;
     }
 
     private void deplacer(StatutJeu etat, Aventurier a, Position cible) {
-        etat.occupation.remove(a.getPosition());
+        etat.getOccupation().remove(a.getPosition());
         a.setPosition(cible);
-        etat.occupation.put(a.getPosition(), a);
+        etat.getOccupation().put(a.getPosition(), a);
     }
 
     private void ramasserSiPossible(StatutJeu etat, Aventurier a) {
-        if (etat.carte.recupererUnTresorSiPossible(a.getPosition())) {
+        if (etat.getCarte().recupererUnTresorSiPossible(a.getPosition())) {
             a.setNbTresorsRamasser(a.getNbTresorsRamasser() + 1);
         }
     }

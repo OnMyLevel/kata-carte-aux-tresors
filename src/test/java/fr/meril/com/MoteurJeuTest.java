@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MoteurTest {
+class MoteurJeuTest {
 
     private Deque<Mouvement> seq(Mouvement... m) {
         ArrayDeque<Mouvement> q = new ArrayDeque<>();
@@ -29,7 +29,7 @@ class MoteurTest {
         );
         StatutJeu etat = new StatutJeu(carte, List.of(a));
 
-        new MoteurJeu().executer(etat);
+        new MoteurJeu().executerJeuTourParTour(etat);
         assertEquals(new Position(0, 0), a.getPosition());
     }
 
@@ -45,7 +45,7 @@ class MoteurTest {
         );
         StatutJeu etat = new StatutJeu(carte, List.of(a));
 
-        new MoteurJeu().executer(etat);
+        new MoteurJeu().executerJeuTourParTour(etat);
         assertEquals(new Position(0, 0), a.getPosition());
     }
 
@@ -83,7 +83,7 @@ class MoteurTest {
 
         StatutJeu etat = new StatutJeu(carte, List.of(a));
 
-        new MoteurJeu().executer(etat);
+        new MoteurJeu().executerJeuTourParTour(etat);
 
         assertEquals(new Position(4, 0), a.getPosition(), "La position finale doit être (4,0)");
         assertEquals(Direction.N, a.getDirection(), "Direction finale attendue : Nord");
@@ -111,7 +111,7 @@ class MoteurTest {
         );
         StatutJeu etat = new StatutJeu(carte, List.of(a1, a2));
 
-        new MoteurJeu().executer(etat);
+        new MoteurJeu().executerJeuTourParTour(etat);
 
         assertEquals(new Position(1, 0), a1.getPosition());
         assertEquals(new Position(2, 0), a2.getPosition());
@@ -136,7 +136,7 @@ class MoteurTest {
         );
         StatutJeu etat = new StatutJeu(carte, List.of(statique, mobile));
 
-        new MoteurJeu().executer(etat);
+        new MoteurJeu().executerJeuTourParTour(etat);
 
         assertEquals(new Position(1, 0), statique.getPosition(), "Le garde ne bouge pas");
         assertEquals(new Position(0, 0), mobile.getPosition(), "Le déplacement vers une case occupée est refusé");
@@ -154,7 +154,7 @@ class MoteurTest {
         );
         StatutJeu etat = new StatutJeu(carte, List.of(a));
 
-        new MoteurJeu().executer(etat);
+        new MoteurJeu().executerJeuTourParTour(etat);
 
         assertEquals(new Position(1, 1), a.getPosition());
         assertEquals(Direction.N, a.getDirection());
@@ -172,7 +172,7 @@ class MoteurTest {
         );
         StatutJeu etat = new StatutJeu(carte, List.of(a1));
 
-        new MoteurJeu().executer(etat);
+        new MoteurJeu().executerJeuTourParTour(etat);
 
         assertEquals(new Position(2, 0), a1.getPosition());
         assertFalse(a1.aEncoreUnMouvement(), "La séquence doit être entièrement consommée");

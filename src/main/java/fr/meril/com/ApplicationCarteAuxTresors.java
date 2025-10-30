@@ -15,15 +15,9 @@ public final class ApplicationCarteAuxTresors {
         Path entree = Paths.get(args[0]);
         Path sortie = Paths.get(args[1]);
 
-        // 1) Lire le fichier d'entrée
-        StatutJeu etat = new ParseurFichierEntree().analyser(entree);
-
-        // 2) Exécuter la simulation
-        new MoteurJeu().executer(etat);
-
-        // 3) Écrire le résultat
-        new EcritureDuResumer().ecrire(etat, sortie);
-
+        StatutJeu etat = new ParseurFichierEntree().analyserLeFichierTxt(entree);
+        new MoteurJeu().executerJeuTourParTour(etat);
+        new EcritureDuResumer().ecrireJeu(etat, sortie);
         System.out.println("Simulation terminée -> " + sortie.toAbsolutePath());
     }
 }

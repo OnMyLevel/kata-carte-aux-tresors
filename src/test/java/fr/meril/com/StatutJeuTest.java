@@ -28,15 +28,15 @@ public class StatutJeuTest {
         StatutJeu sj = new StatutJeu(carte, liste);
 
         // Références
-        assertSame(carte, sj.carte);
-        assertSame(liste, sj.aventuriers);
+        assertSame(carte, sj.getCarte());
+        assertSame(liste, sj.getAventuriers());
 
         // Occupation
-        assertEquals(2, sj.occupation.size());
-        assertTrue(sj.occupation.containsKey(a1.getPosition()));
-        assertTrue(sj.occupation.containsKey(a2.getPosition()));
-        assertEquals(a1, sj.occupation.get(a1.getPosition()));
-        assertEquals(a2, sj.occupation.get(a2.getPosition()));
+        assertEquals(2, sj.getOccupation().size());
+        assertTrue(sj.getOccupation().containsKey(a1.getPosition()));
+        assertTrue(sj.getOccupation().containsKey(a2.getPosition()));
+        assertEquals(a1, sj.getOccupation().get(a1.getPosition()));
+        assertEquals(a2, sj.getOccupation().get(a2.getPosition()));
     }
 
     @Test
@@ -44,10 +44,10 @@ public class StatutJeuTest {
         Carte carte = new Carte(2, 2);
         StatutJeu sj = new StatutJeu(carte, Collections.emptyList());
 
-        assertNotNull(sj.occupation);
-        assertTrue(sj.occupation.isEmpty());
-        assertSame(carte, sj.carte);
-        assertTrue(sj.aventuriers.isEmpty());
+        assertNotNull(sj.getOccupation());
+        assertTrue(sj.getOccupation().isEmpty());
+        assertSame(carte, sj.getCarte());
+        assertTrue(sj.getAventuriers().isEmpty());
     }
 
     @Test

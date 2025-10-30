@@ -5,13 +5,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ParseurFichierEntree {
 
-    public StatutJeu analyser(Path fichier) throws IOException {
+    public StatutJeu analyserLeFichierTxt(Path fichier) throws IOException {
         List<String> lignes = Files.readAllLines(fichier).stream()
+                .map(l -> l.replaceFirst("\\s*#.*", "")) // coupe les commentaires inline (avec ou sans espaces avant #)
                 .map(String::trim)
-                .filter(s -> !s.isEmpty() && !s.startsWith("#"))
+                .filter(s -> !s.isEmpty())
                 .toList();
 
         Carte carte = null;
@@ -22,7 +24,7 @@ public class ParseurFichierEntree {
             String[] parts = ligne.split("\\s*-\\s*");
             if (parts.length == 0) continue;
 
-            String tag = parts[0];
+            String tag = parts[0].trim().toUpperCase(Locale.ROOT); // tolère 'c', 'm', etc.
             switch (tag) {
                 case "C" -> {
                     exigerColonnes(parts, 3, "C - largeur - hauteur", ligne);
@@ -61,6 +63,8 @@ public class ParseurFichierEntree {
                     );
                     Direction o = parseDirectionStrict(parts[4], ligne);
                     String prog = parts[5];
+                    // Nettoyage : garder uniquement A/G/D (tolère espaces, virgules, deux-points, etc.)
+                    prog = prog.replaceAll("[^AGD]", "");
 
                     exigerDansBornes(carte, p, "Aventurier hors carte");
                     if (carte.estUneZoneMontagne(p)) {
@@ -103,7 +107,7 @@ public class ParseurFichierEntree {
 
     private static Direction parseDirectionStrict(String s, String ligne) {
         try {
-            return Direction.valueOf(s);
+            return Direction.valueOf(s.toUpperCase(Locale.ROOT)); // tolère 'n', 'e', 's', 'w'
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(
                     "Direction invalide \"" + s + "\" (attendu: N/E/S/W, etc.) dans la ligne: \"" + ligne + "\""

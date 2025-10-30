@@ -38,7 +38,7 @@ class EcritureDuResumerTest {
         StatutJeu etat = new StatutJeu(carte, List.of(a));
 
         Path fichierSortie = tmp.resolve("resume.txt");
-        new EcritureDuResumer().ecrire(etat, fichierSortie);
+        new EcritureDuResumer().ecrireJeu(etat, fichierSortie);
 
         assertTrue(Files.exists(fichierSortie), "Le fichier résumé doit être créé");
         List<String> lignes = Files.readAllLines(fichierSortie);
@@ -66,7 +66,7 @@ class EcritureDuResumerTest {
 
         Path dossier = tmp.resolve("sorties/sous/repertoire");
         Path fichierSortie = dossier.resolve("etat.txt");
-        new EcritureDuResumer().ecrire(etat, fichierSortie);
+        new EcritureDuResumer().ecrireJeu(etat, fichierSortie);
 
         assertTrue(Files.exists(fichierSortie), "Le fichier doit être créé même si les dossiers n’existent pas");
     }
@@ -78,7 +78,7 @@ class EcritureDuResumerTest {
         StatutJeu etat = new StatutJeu(carte, List.of());
         Path fichierSortie = tmp.resolve("vide.txt");
 
-        new EcritureDuResumer().ecrire(etat, fichierSortie);
+        new EcritureDuResumer().ecrireJeu(etat, fichierSortie);
         List<String> lignes = Files.readAllLines(fichierSortie);
 
         assertFalse(lignes.isEmpty());
@@ -89,7 +89,7 @@ class EcritureDuResumerTest {
         Carte c = new Carte(1,1);
         StatutJeu  e = new StatutJeu(c, java.util.List.of());
         Path out = Paths.get("target/test-sortie-min.txt");
-        new EcritureDuResumer().ecrire(e, out);
+        new EcritureDuResumer().ecrireJeu(e, out);
         List<String> lignes = Files.readAllLines(out);
         assertTrue(lignes.get(0).startsWith("C - 1 - 1"));
     }
@@ -111,11 +111,11 @@ class EcritureDuResumerTest {
         Files.writeString(entree, input, StandardCharsets.UTF_8);
 
         ParseurFichierEntree parseur = new ParseurFichierEntree();
-        StatutJeu etat = parseur.analyser(entree);
-        new MoteurJeu().executer(etat);
+        StatutJeu etat = parseur.analyserLeFichierTxt(entree);
+        new MoteurJeu().executerJeuTourParTour(etat);
 
         Path sortie = tmp.resolve("out/resume.txt");
-        new EcritureDuResumer().ecrire(etat, sortie);
+        new EcritureDuResumer().ecrireJeu(etat, sortie);
 
         assertTrue(Files.exists(sortie),
                 "Le fichier de sortie doit être créé");
