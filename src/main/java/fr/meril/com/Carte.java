@@ -19,7 +19,7 @@ public  class Carte {
         }
     }
 
-    public boolean bornesOk(Position p){
+    public boolean dansLesBornes(Position p){
         return 0<=p.getX() && p.getX()<this.largeur && 0<=p.getY() && p.getY()<this.hauteur;
     }
 
@@ -45,7 +45,10 @@ public  class Carte {
         this.getMontagnes().add(p);
     }
     public void ajoutDeTresors(Position p, int n){
-        this.grille[p.getY()][p.getX()].setTresors( this.grille[p.getY()][p.getY()].getTresors() + n);
+        if (!dansLesBornes(p)) {
+            throw new IllegalArgumentException("Trésor hors carte en " + p);
+        }
+        this.grille[p.getY()][p.getX()].setTresors( this.grille[p.getY()][p.getX()].getTresors() + n);
     }
     public java.util.List<String> affichageDeTresorsPourSortie(){
         java.util.List<String> out = new java.util.ArrayList<>();

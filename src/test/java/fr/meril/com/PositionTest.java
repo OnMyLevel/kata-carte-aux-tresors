@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Tests unitaires pour la classe Position (valeur immuable).
  */
-class PositionTest {
+public class PositionTest {
 
     @Test
 

@@ -28,14 +28,14 @@ public class CarteTest {
     }
 
     @Test
-    void testBornesOk() {
-        assertTrue(carte.bornesOk(new Position(0, 0)));
-        assertTrue(carte.bornesOk(new Position(2, 3))); // coin opposé (largeur-1, hauteur-1)
+    void testDansLesBornes() {
+        assertTrue(carte.dansLesBornes(new Position(0, 0)));
+        assertTrue(carte.dansLesBornes(new Position(2, 3))); // coin opposé (largeur-1, hauteur-1)
 
-        assertFalse(carte.bornesOk(new Position(-1, 0)));
-        assertFalse(carte.bornesOk(new Position(0, -1)));
-        assertFalse(carte.bornesOk(new Position(3, 0))); // x == largeur
-        assertFalse(carte.bornesOk(new Position(0, 4))); // y == hauteur
+        assertFalse(carte.dansLesBornes(new Position(-1, 0)));
+        assertFalse(carte.dansLesBornes(new Position(0, -1)));
+        assertFalse(carte.dansLesBornes(new Position(3, 0))); // x == largeur
+        assertFalse(carte.dansLesBornes(new Position(0, 4))); // y == hauteur
     }
 
     @Test

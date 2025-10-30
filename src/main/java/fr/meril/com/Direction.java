@@ -19,7 +19,8 @@ public enum Direction {
             case N -> E;
             case E -> S;
             case S -> O;
-            case O -> N; };
+            case O -> N;
+        };
     }
 
     public int dX() {
