@@ -16,11 +16,15 @@ class ParseurFichierEntreeTest {
     @TempDir
     Path tmp;
 
-    private static Path samples(){ return Paths.get(System.getProperty("fichierstests.dir","fichierstests")); }
+    private static Path samples(){
+        return Paths.get(System.getProperty("fichierstests.dir","fichierstests"));
+    }
 
 
     @Test void montagne() throws Exception {
-        Path entree = samples().resolve("entree_montagne.txt"); Path attendu = samples().resolve("sortie-attendue_montagne.txt"); Path sortie = Paths.get("target/int-montagne.txt");
+        Path entree = samples().resolve("entree_montagne.txt");
+        Path attendu = samples().resolve("sortie-attendue_montagne.txt");
+        Path sortie = Paths.get("target/int-montagne.txt");
         StatutJeu etat = new ParseurFichierEntree().analyserLeFichierTxt(entree); new MoteurJeu().executerJeuTourParTour(etat); new EcritureDuResumer().ecrireJeu(etat, sortie);
         assertEquals(
                 String.join("\n", Files.readAllLines(attendu)).trim(),
@@ -28,7 +32,9 @@ class ParseurFichierEntreeTest {
     }
 
     @Test void exempleSimple() throws Exception {
-        Path entree = samples().resolve("entree.txt"); Path attendu = samples().resolve("sortie-attendue.txt"); Path sortie = Paths.get("target/int-exemple.txt");
+        Path entree = samples().resolve("entree.txt");
+        Path attendu = samples().resolve("sortie-attendue.txt");
+        Path sortie = Paths.get("target/int-exemple.txt");
         StatutJeu etat = new ParseurFichierEntree().analyserLeFichierTxt(entree); new MoteurJeu().executerJeuTourParTour(etat); new EcritureDuResumer().ecrireJeu(etat, sortie);
         assertEquals(
                 String.join("\n", Files.readAllLines(attendu)).trim(),

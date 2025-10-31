@@ -33,10 +33,6 @@ public class Carte {
         return this.grille[p.getY()][p.getX()].getTresors();
     }
 
-    public int getNbTresors(Position p) {
-        return getTresors(p);
-    }
-
     public boolean recupererUnTresorSiPossible(Position p) {
         Case c = this.grille[p.getY()][p.getX()];
         if (c.getTresors() > 0) {
@@ -52,18 +48,6 @@ public class Carte {
         }
         this.grille[p.getY()][p.getX()]
                 .setTresors(this.grille[p.getY()][p.getX()].getTresors() + n);
-    }
-
-    public List<Position> getPositionsTresors() {
-        List<Position> positions = new ArrayList<>();
-        for (int y = 0; y < hauteur; y++) {
-            for (int x = 0; x < largeur; x++) {
-                if (grille[y][x].getTresors() > 0) {
-                    positions.add(new Position(x, y));
-                }
-            }
-        }
-        return positions;
     }
 
     public List<String> affichageDeTresorsPourSortie() {

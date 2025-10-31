@@ -8,7 +8,7 @@ public final class MoteurJeu {
 
     public void executerJeuTourParTour(StatutJeu etat) {
         int tour = 0;
-        while (auMoinsUnPeutEncoreBouger(etat)) {
+        while (auMoinsUnJoueurPeutEncoreBouger(etat)) {
             tour++;
             appliquerRotations(etat);
             List<Intention> intentions = collecterIntentionsAvance(etat);
@@ -16,7 +16,7 @@ public final class MoteurJeu {
         }
     }
 
-    private boolean auMoinsUnPeutEncoreBouger(StatutJeu etat) {
+    private boolean auMoinsUnJoueurPeutEncoreBouger(StatutJeu etat) {
         return etat.getAventuriers().stream().anyMatch(Aventurier::aEncoreUnMouvement);
     }
 
@@ -55,11 +55,11 @@ public final class MoteurJeu {
             a.consommer(); // consomme toujours l'action A
             Position cible = in.cible();
 
-            if (!deplacementValide(etat, cible, ciblesReservees)) continue;
+            if (!deplacementValide(etat, cible, ciblesReservees))
+                continue;
 
             deplacer(etat, a, cible);
             ciblesReservees.add(cible);
-
             ramasserSiPossible(etat, a);
         }
     }
@@ -68,8 +68,7 @@ public final class MoteurJeu {
         if (!etat.getCarte().dansLesBornes(cible)) return false;
         if (etat.getCarte().estUneZoneMontagne(cible)) return false;
         if (etat.getOccupation().containsKey(cible)) return false;
-        if (ciblesReservees.contains(cible)) return false;
-        return true;
+        return !ciblesReservees.contains(cible);
     }
 
     private void deplacer(StatutJeu etat, Aventurier a, Position cible) {
@@ -83,4 +82,5 @@ public final class MoteurJeu {
             a.setNbTresorsRamasser(a.getNbTresorsRamasser() + 1);
         }
     }
+
 }

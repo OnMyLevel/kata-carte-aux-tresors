@@ -81,9 +81,6 @@ public class ParseurFichierEntree {
             }
         }
 
-        if (carte == null) {
-            throw new IllegalArgumentException("Carte (C - largeur - hauteur) manquante");
-        }
         return new StatutJeu(carte, aventuriers);
     }
 

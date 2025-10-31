@@ -1,6 +1,7 @@
 package fr.meril.com;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -24,6 +25,11 @@ public class EcritureDuResumer {
                     a.getPosition().getY(), a.getDirection(), a.getNbTresorsRamasser()));
 
         Files.createDirectories(sortie.getParent());
-        Files.write(sortie, lignes, java.nio.charset.StandardCharsets.UTF_8);
+        Files.write(sortie, lignes, StandardCharsets.UTF_8);
+
+        System.out.println("=== Contenu du fichier de sortie ===");
+        for (String ligne : lignes) {
+            System.out.println(ligne);
+        }
     }
 }
