@@ -1,5 +1,5 @@
 ## KATA-CARTE-AUX-TRESORS 
-
+Ce projet s’inspire du jeu 2048 que j’avais développé en C++ lors de mon DUT, ce qui m’a permis de réutiliser certaines logiques et concepts appris à l’époque.
 ### But
 
 Lire un fichier d’entrée, simuler les déplacements d’aventuriers (tour par tour), ramasser les trésors (à **l’entrée** d’une case), puis écrire l’état final.
